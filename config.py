@@ -17,3 +17,10 @@ def add_shell_context():
     return {'db': db, 'User':User, 'Post':Post, 'Comment':Comment}
 
 @manager.command
+def test():
+    import unittest
+    test=unittest.TestLoader().discover("Test")
+    unittest.TextTestRunner(verbosity=5).run(test)
+
+if __name__=="__main__":
+    manager.run()
