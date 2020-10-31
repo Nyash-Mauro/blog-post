@@ -31,3 +31,33 @@ def profile(username):
     user = User.query.filter_by(username = username).first()
     return render_template('profile.html',user=user)
 
+@main.route('/write_post/new',methods= ['POST','GET'])
+@login_required
+def write_post():
+    if request.method == 'POST':
+        form = request.form
+        title = form.get("title")
+        content = form.get("content")
+        category= form.get("category")
+        
+        if  title==None or content==None :
+            error = "Post must have some content and title"
+            return render_template('write_post.html', error=error)
+        else:
+            post = Post( title=title,content=content,category=category,author = current_user.username, user_id= current_user.id)
+            post.save_post()
+            return redirect(url_for("main.displayposts"))            
+    return render_template('write_post.html',title='Write')
+
+@main.route('/<username>/update/pic', methods = ['POST'])
+@login_required
+def update_profile_pic(username):
+    user = User.query.filter_by(username = username).first()
+
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_img = path
+        db.session.commit()
+
+    return redirect(url_for('main.profile', username = username))
