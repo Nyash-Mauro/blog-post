@@ -32,5 +32,34 @@ def register():
         username = form.get("username")
         email = form.get("email")
         password = form.get("password")
-        confirm_password = form.get("confirm_password")       
+        confirm_password = form.get("confirm_password")  
+        if username==None or password==None or confirm_password==None or email==None:
+            error = "username,password and email are required"
+            return render_template('register.html', error=error)    
+
+        regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+        if  re.match(regex,email)== None:
+            error = "Invalid Email.Please use correct email format"
+            return render_template('register.html',error=error)
+
+        if password != confirm_password:
+            error = " Passwords Not a match"
+            return render_template('register.html',error=error)
+        else:
+            user = User.query.filter_by(username= username).first()
+            if user!= None:
+                error = "Username exists"
+                return render_template('register.html', error = error)
+            user = User.query.filter_by(email=email).first()
+            if user!= None:
+                error = "Email exists"
+                return render_template('register.html', error = error)
+
+            user = User(firstname=firstname,secondname=secondname,username=username,email=email)
+            user.set_password(password)
+            user.save()
+            return redirect(url_for("auth.login"))
+    
+    
+    return render_template('register.html',title='Register')            
         
