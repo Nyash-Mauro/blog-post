@@ -1,0 +1,45 @@
+{%extends 'base.html'%}
+
+{% block styles %}
+{{super ()}}
+<link rel="stylesheet" href="../static/css/styles.css">
+
+{% endblock %}
+{%block content%}
+{% for post in posts %}
+<div class="container">
+    <div class="card">
+        <div class="row">
+
+            <div class="col-md-7">
+
+                <p class="mr-2" href="#">Author : {{ post.author|capitalize}}</p>
+                <p class="text-muted"> Date: {{ post.date_posted.strftime('%Y-%m-%d') }} </p>
+
+
+                <p><a class="" href="{{ url_for('main.post', post_id=post.id) }}">{{ post.title }}</a></p>
+                <p class="">{{ post.content|truncate(500) }}</p>
+
+
+                <h1> <a class=" " href="{{ url_for('main.post', post_id=post.id) }}">View More</a></h1>
+
+
+                <h1> <a class=" ml-5 " href="{{ url_for('main.post', post_id=post.id) }}">Comment</a></h1>
+            </div>
+            {% endfor %}
+            <div class="col-md-4">
+                <div class="card-body quote">
+
+                    <p class="card-text quote">"{{quote.quote}}"</p><br>
+                    <small>
+                        <p class="text-muted"> {{quote.author|capitalize}} <small>
+                            </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{%endblock%}
