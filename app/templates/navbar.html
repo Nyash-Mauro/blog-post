@@ -1,0 +1,62 @@
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <nav>
+
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-2">
+
+                    {%if current_user.is_authenticated  and current_user.profile_img is none%}
+
+                    <a class=" nav-link active mr-3"
+                        href="{{ url_for('main.profile',username=current_user.username) }}">Welcome
+                        {{current_user.username}}</a>
+                    {%elif current_user.is_authenticated and current_user.profile_img is not none %}
+
+                    <a class=" nav-link active" href="{{ url_for('main.profile',username=current_user.username) }}">
+                        Welcome
+                        {{current_user.username}}</a>
+                    <a class=" nav-link active" href="{{ url_for('main.profile',username=current_user.username) }}"><img
+                            src="{{url_for('static', filename = current_user.profile_img)}}" alt=""
+                            style="width:5%;height:auto;"></a>
+                    {%else%}
+                    <ul>
+
+                        <li>
+                            <a class="navbar-brand mr-4" href="/">Blog</a></li>
+                        <li><a class="nav-item nav-link active" href="{{ url_for('main.displayposts') }}">Home</a>
+                        </li>
+                    </ul>
+
+                    {%endif%}
+                </div>
+
+                <div class="navbar-nav nav-item ">
+                    <ul>
+
+                        {%if current_user.is_authenticated and current_user.profile_img is none%}
+                        <li> <a class="nav-item nav-link active mr-5" href="{{ url_for('main.displayposts') }}">Home</a>
+                        </li>
+                        <li> <a class=" nav-link active"
+                                href="{{ url_for('main.profile',username=current_user.username) }}">Profile</a> </li>
+                        <li> <a class=" nav-link active" href="{{ url_for('main.write_post') }}">Post</a> </li>
+                        <li><a class=" nav-link active" href="{{ url_for('auth.logout') }}">logout</a> </li>
+                        {%elif current_user.is_authenticated and current_user.profile_img is not none%}
+                        <li><a class="nav-item nav-link active mr-3" href="{{ url_for('main.displayposts') }}">Home</a>
+                        </li>
+                        <li> <a class=" nav-link active"
+                                href="{{ url_for('main.profile',username=current_user.username) }}">Profile</a> </li>
+                        <li> <a class=" nav-link active" href="{{ url_for('main.write_post') }}">Post</a> </li>
+                        <li><a class=" nav-link active" href="{{ url_for('auth.logout') }}">logout</a> </li>
+                        {%else%}
+
+                        <li> <a class=" nav-link active" href="{{ url_for('main.subscribe') }}">Subscribe</a> </li>
+                        <li><a class=" nav-link active" href="{{ url_for('auth.login') }}">Login</a> </li>
+                        <li><a class=" nav-link active" href="{{ url_for('auth.register') }}">Sign up</a> </li>
+                        {%endif%}
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</nav>
