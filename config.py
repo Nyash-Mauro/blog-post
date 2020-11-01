@@ -1,26 +1,35 @@
-from flask_script import Manager,Server
-from app import app,db
-from app import create_app,db_app
-from app import create_app,db
-from app.models import User,Post,Comment
-from flask_migrate import Migrate,MigrateCommand
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+class Config(object):
+      
+     DEBUG = False
+     TESTING = False
+     SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:@localhost/'
+     QUOTES_API = 'http://quotes.stormconsultancy.co.uk/random.json'
+     SECRET_KEY = ''
+     SQLALCHEMY_TRACK_MODIFICATIONS = True
+  
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 
-app = create_app('development')
-manager = Manager(app)
-manager.add_command('db',MigrateCommand)
+class StagingConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
 
 
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://@localhost/"
 
-@manager.shell
-def add_shell_context():
-    return {'db': db, 'User':User, 'Post':Post, 'Comment':Comment}
 
-@manager.command
-def test():
-    import unittest
-    test=unittest.TestLoader().discover("Test")
-    unittest.TextTestRunner(verbosity=5).run(test)
+class TestingConfig(Config):
+    TESTING = True
 
-if __name__=="__main__":
-    manager.run()
+config_options = {
+'test':TestingConfig,
+'production':ProductionConfig,
+'development': DevelopmentConfig
+}
