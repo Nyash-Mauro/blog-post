@@ -1,4 +1,4 @@
-<h1 color="red">Blog Simple App</h1>
+<h1><u>Blog Simple App</u></h1>
  
 ## DESCRIPTION
 
