@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+
+{% block styles %}
+{{super ()}}
+<link rel="stylesheet" href="../static/css/styles.css">
+
+{% endblock %}
+
+{%block content%}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-7">
+            <form class="border border-light p-6">
+
+                <div class="text-center">
+                    <p class="h4 mb-4">Subscribe</p>
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{error}}
+                    </div>
+                    {%endif%}
+
+                    <!-- <p>Enroll to our webpage. We value your comment 😍😍😍😍</p> -->
+
+                    <p>
+                        <a href="" target="_blank">Get updates on new posts</a>
+                    </p>
+                </div>
+
+                <input type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Name">
+
+                <input type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="e-mail">
+
+                <button class="btn btn-info btn-block red darken-4" type="submit">Subscribe</button>
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+{%endblock%}
