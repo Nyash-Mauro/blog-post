@@ -3,30 +3,54 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
-class User(UserMixin,db.Model):
-    __tablename__='users'
-    id = db.Column(db.Integer,primary_key=True)
-    firstname = db.Column(db.String(255),nullable=False,unique=True)
-    secondstname = db.Column(db.String(255),nullable=False,unique=True)
-    username = db.Column(db.String(255),nullable=False,unique=True)
-    email = db.Column(db.String(255),nullable=False,unique=True)  
+
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(255), nullable=False, unique=True)
+    secondstname = db.Column(db.String(255), nullable=False, unique=True)
+    username = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     bio = db.Column(db.String(255))
-    post = db.relationship('Post',backref='user',lazy ='dynamic')  
-    password = db.Column(db.String(255),nullable=False)
+    post = db.relationship('Post', backref='user', lazy='dynamic')
+    password = db.Column(db.String(255), nullable=False)
 
     def save(self):
         db.session.add(self)
         db.session.commit()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
-    def set_password(self,password):
+    def set_password(self, password):
         password_hash = generate_password_hash(password)
         self.password = password_hash
-        
+
     def check_password(self, password):
-        return check_password_hash(self.password,password)
-    
+        return check_password_hash(self.password, password)
+
     def __repr__(self):
-        return f"User {self.username}"   
+        return f"User {self.username}"
+
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    author = db.Column(db.String(255), nullable=False)
+    category = db.Column(db.String(255), nullable=False)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_post(self):
+        db.session.delete(self)
+        db.session.commit()
+    def __repr__(self):
+        return "Post:%s" % str(self.title)
