@@ -13,4 +13,20 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     post = db.relationship('Post',backref='user',lazy ='dynamic')  
     password = db.Column(db.String(255),nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def set_password(self,password):
+        password_hash = generate_password_hash(password)
+        self.password = password_hash
+        
+    def check_password(self, password):
+        return check_password_hash(self.password,password)
     
+    def __repr__(self):
+        return f"User {self.username}"   
