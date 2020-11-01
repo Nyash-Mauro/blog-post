@@ -7,7 +7,7 @@ class Config(object):
      TESTING = False
      SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:@localhost/'
      QUOTES_API = 'http://quotes.stormconsultancy.co.uk/random.json'
-     SECRET_KEY = ''
+     SECRET_KEY = 'nyaga'
      SQLALCHEMY_TRACK_MODIFICATIONS = True
   
 class ProductionConfig(Config):

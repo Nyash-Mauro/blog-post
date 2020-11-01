@@ -24,7 +24,7 @@ def create_app(Configname):
     db.init_app(app)
     mail.init_app(app)
 
-    configure_uploads(app,photos)    
+    # configure_uploads(app,photos)    
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
