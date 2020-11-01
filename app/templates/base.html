@@ -1,0 +1,19 @@
+<html>
+{% block styles%}
+{% endblock %}
+{% if title %}
+<title>Blogwebsite{{ title }}</title>
+{% else %}
+<title>BlogPost</title>
+{% endif %}
+
+<body>
+    {% block navbar %}
+    {% include "navbar.html" %}
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+</body>
+
+
+</html>
