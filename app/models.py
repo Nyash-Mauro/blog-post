@@ -76,3 +76,8 @@ class Quotes:
   def __init__ (self,author,quote):
     self.author = author
     self.quote = quote
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(user_id)
