@@ -1,10 +1,10 @@
 from flask import Flask,render_template , url_for,request,redirect
-from flask.templating import render_template_string
 from . import main
 from flask_login import login_required,current_user
 from app.models import User,Post,Comment
 from .. import db,photos
 from app.requests import get_Quotes
+
 
 
 @main.route('/')
@@ -14,6 +14,7 @@ def home():
    
     return render_template('index.html',quotes=quotes)
 
+
 @main.route('/display_all', methods= ['POST','GET'])
 def displayposts():
      posts = Post.query.all()
@@ -21,15 +22,16 @@ def displayposts():
      print(quote)
      return render_template('display_posts.html',posts=posts,quote=quote)
 
+
 @main.route('/subscribe')
 def subscribe():
-    return render_template('subscription.html')
+    return render_template('subscription.html',title='Subscribe')
 
 @main.route('/profile/<username>')
 @login_required
 def profile(username):
     user = User.query.filter_by(username = username).first()
-    return render_template('profile.html',user=user)
+    return render_template('profile.html',title='Profile',user=user)
 
 @main.route('/write_post/new',methods= ['POST','GET'])
 @login_required
@@ -49,6 +51,8 @@ def write_post():
             return redirect(url_for("main.displayposts"))            
     return render_template('write_post.html',title='Write')
 
+
+
 @main.route('/<username>/update/pic', methods = ['POST'])
 @login_required
 def update_profile_pic(username):
@@ -67,7 +71,7 @@ def update_profile_pic(username):
 def update_post(post_id):
     
     
-    return redirect(url_for('main.displayposts'))
+    return redirect(url_for('main.display_posts'))
 
 @main.route('/delete_post/<int:post_id>',methods= ['POST','GET'])
 @login_required
@@ -83,6 +87,7 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter_by(post_id = post_id)
     return render_template('post.html', title=post.title, post=post,comments=comments)
+
 
 @main.route('/post/<int:post_id>',methods= ['POST','GET'])
 
@@ -110,4 +115,5 @@ def delete_comment(post_id):
     comment.delete_comment()
     
     
-    return redirect(url_for('main.post',post_id=post_id)) 
+    return redirect(url_for('main.post',post_id=post_id))          
+    
