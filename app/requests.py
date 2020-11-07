@@ -1,6 +1,6 @@
 import urllib.request,json
 from config import Config
-# from .models import Quotes
+from .models import Quote
 
 quotes_api = Config.QUOTES_API
 base_url = None
@@ -14,5 +14,5 @@ def get_Quotes():
       if quotes_api_response:
         author = quotes_api_response['author']
         quote = quotes_api_response['quote']    
-        quote_object = Quotes(author=author , quote=quote)
+        quote_object = Quote(author=author , quote=quote)
   return quote_object

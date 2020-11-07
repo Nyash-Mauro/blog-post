@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% import 'wtf.html' as wtf%}
+{% import 'bootstrap/wtf.html' as wtf%}
 
 {% block styles%}
 {{ super() }}
@@ -9,20 +9,16 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8 login-form">
-          <h2>ADD A BLOG</h2>
-          
-        
-        
-        <!-- Login form -->
-        {{wtf.quick_form(form)}}
-       
-      </div>
-      <div clas="col-md-2"> </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 login-form">
+      <h2>ADD A BLOG</h2>
+      <!-- Login form -->
+      {{wtf.quick_form(form)}}
+
     </div>
+    <div clas="col-md-2"> </div>
   </div>
 </div>
+</div>
 {% endblock %}
-

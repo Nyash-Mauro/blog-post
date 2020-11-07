@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort,flash,session
 from . import main
 from flask_login import login_required,current_user
-from ..models import User,Blog,Quote,Comment
+from ..models import User,Blog,Comment
 from .forms import UpdateProfile,AddBlog,CommentForm
  
 from datetime import datetime
@@ -23,11 +23,11 @@ def index():
     return render_template('index.html', title = title)
 
 @main.route('/quotes')
-def quotes(get_Quote):
-    global get_Quotes
+def quote():
+    # global get_Quotes
     '''
     '''
-    quote = get_Quote
+    quote = get_Quotes()
     title = 'Blog | Quotes'
     
     return render_template('quotes.html', title = title,quote = quote)
